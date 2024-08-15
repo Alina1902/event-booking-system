@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles1.css">
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <header>
+        <h1>Booking Confirmation</h1>
+        <nav>
+            <ul>
+                <li><a href="code.html">Home</a></li>
+                <li><a href="code.html#events">Events</a></li>
+                <li><a href="code.html#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="confirmation">
+            <h2>Thank You for Your Booking!</h2>
+            <p>Your booking has been confirmed. Here are your details:</p>
+            
+            <div class="booking-summary">
+                <h3>Event Details</h3>
+                <p id="event-title"></p>
+                <p id="event-date"></p>
+                <p id="event-location"></p>
+
+                <h3>Ticket Information</h3>
+                <p id="ticket-type"></p>
+                <p id="quantity"></p>
+                <p id="total-price"></p>
+            </div>
+
+            <div class="next-steps">
+                <h3>Next Steps</h3>
+                <p>You will receive a confirmation email shortly with your booking details.</p>
+                <p>Please check your email for further instructions and directions to the event.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 EventWave. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Retrieve booking details from localStorage
+        const bookingDetails = JSON.parse(localStorage.getItem('booking'));
+        const eventDetails = JSON.parse(localStorage.getItem('eventDetails'));
+
+        // Populate confirmation page with booking details
+        document.getElementById('event-title').textContent = `Event: ${eventDetails.title}`;
+        document.getElementById('event-date').textContent = `Date: ${eventDetails.date}`;
+        document.getElementById('event-location').textContent = `Location: ${eventDetails.location}`;
+        document.getElementById('ticket-type').textContent = `Ticket Type: ${bookingDetails.ticketType}`;
+        document.getElementById('quantity').textContent = `Quantity: ${bookingDetails.quantity}`;
+
+        // Calculate total price
+        const ticketPrice = eventDetails.ticketOptions.find(option => option.name === bookingDetails.ticketType).price;
+        const totalPrice = ticketPrice * bookingDetails.quantity;
+        document.getElementById('total-price').textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+
+        // Clear localStorage after displaying the information
+        localStorage.removeItem('booking');
+        localStorage.removeItem('eventDetails');
+    </script>
+</body>
+</html>
